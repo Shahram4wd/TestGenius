@@ -14,7 +14,7 @@ if (!username || !password) {
 
 console.log('Username and password loaded from environment variables.');
 
-export { username, password };
+//export { username, password };
 
 test('login setup', async ({ page }) => {
   await page.goto('https://dev.myhge.com/');
