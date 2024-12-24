@@ -1,36 +1,27 @@
 import {test, expect} from "@playwright/test"
-import fs from 'fs';
+import dotenv from 'dotenv';
 import path from 'path';
 
-function getSessionIdFromAuth(): string {
-  // Construct the path to auth.json
-  const authPath = path.join(__dirname, '../playwright/.auth/auth.json');
+// Load .env file from the specified path
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-  // Read and parse the auth.json file
-  const authData = JSON.parse(fs.readFileSync(authPath, 'utf-8'));
+const username = process.env.USERNAME;
+const password = process.env.PASSWORD;
 
-  // Find the session ID from the cookies
-  const sessionCookie = authData.cookies.find(
-    (cookie: { name: string }) => cookie.name === 'hge_dev_session_id'
-  );
-
-  if (!sessionCookie || !sessionCookie.value) {
-    throw new Error('Session ID not found in auth.json');
-  }
-
-  // Remove quotes from the session ID if necessary
-  return sessionCookie.value.replace(/"/g, '');
+if (!username || !password) {
+  throw new Error('Missing USERNAME or PASSWORD environment variables');
 }
 
-// Define the base URL
-const baseUrl = 'https://dev.myhge.com/secure/';
+console.log('Username and password loaded from environment variables.');
 
-test('test', async ({ page }) => {
+//export { username, password };
+
+test('login setup', async ({ page }) => {
   await page.goto('https://dev.myhge.com/');
-  await page.getByPlaceholder('Username').fill('kcorros');
-  await page.getByPlaceholder('Password').click();
-  await page.getByPlaceholder('Password').fill('x3ykx57v');
+  await page.getByPlaceholder('Username').click();
+  await page.getByPlaceholder('Username').fill(username);
+  await page.getByPlaceholder('Password').fill(password);
   await page.getByRole('button', { name: 'Log In' }).click();
-  await page.getByRole('link', { name: 'Users' }).click();
-  await page.getByRole('link', { name: 'Add User' }).click();
+  await expect(page.getByRole('heading', { name: 'Dashboards' })).toBeVisible();
+  await page.context().storageState({path: "./playwright/.auth/auth.json"})
 });
