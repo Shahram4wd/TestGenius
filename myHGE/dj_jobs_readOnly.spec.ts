@@ -23,14 +23,14 @@ function getSessionIdFromAuth(): string {
 }
 
 // Define the base URL
-const baseUrl = 'https://stagingdj.myhge.com/';
+const baseUrl = 'https://stagedj.myhge.com/';
 
 test.beforeEach(async ({ page }) => {
   // Get session ID from auth.json
   const sessionId = getSessionIdFromAuth();
 
   // Construct the target URL
-  const targetUrl = `${baseUrl}${sessionId}/jobs/filter`;
+  const targetUrl = `${baseUrl}jobs/filter`;
 
   // Navigate to the constructed URL
   await page.goto(targetUrl);
@@ -48,4 +48,12 @@ test('Select Division', async ({ page }) => {
   await page.locator('#is-inactive').selectOption('0');
   await page.getByRole('button', { name: 'Filter' }).click();
   await expect(page.locator('tbody')).toContainText('Altoona');
+});
+
+test('Job View Door', async ({ page }) => {
+  await page.reload();
+  await page.getByRole('link', { name: 'Mid-Atlantic' }).click();
+  await page.getByRole('link', { name: 'Scheduler, Account' }).click();
+  await page.getByRole('link', { name: 'Lafavors, Brandon' }).click();
+  await expect(page.locator('h2')).toContainText('Oh Noes!');
 });
