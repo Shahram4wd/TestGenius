@@ -17,7 +17,7 @@ console.log('Username and password loaded from environment variables.');
 //export { username, password };
 
 test('login setup', async ({ page }) => {
-  await page.goto('https://dev.myhge.com/');
+  await page.goto('https://staging.myhge.com/');
   await page.getByPlaceholder('Username').click();
   await page.getByPlaceholder('Username').fill(username);
   await page.getByPlaceholder('Password').fill(password);

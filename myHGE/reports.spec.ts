@@ -11,7 +11,7 @@ function getSessionIdFromAuth(): string {
 
   // Find the session ID from the cookies
   const sessionCookie = authData.cookies.find(
-    (cookie: { name: string }) => cookie.name === 'hge_dev_session_id'
+    (cookie: { name: string }) => cookie.name === 'hge_stage_session_id'
   );
 
   if (!sessionCookie || !sessionCookie.value) {
@@ -23,7 +23,7 @@ function getSessionIdFromAuth(): string {
 }
 
 // Define the base URL
-const baseUrl = 'https://dev.myhge.com/secure/';
+const baseUrl = 'https://staging.myhge.com/secure/';
 
 test.beforeEach(async ({ page }) => {
   // Get session ID from auth.json
