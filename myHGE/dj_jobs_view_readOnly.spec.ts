@@ -22,15 +22,12 @@ function getSessionIdFromAuth(): string {
   return sessionCookie.value.replace(/"/g, '');
 }
 
-// Define the base URL
-const baseUrl = 'https://stagedj.myhge.com/';
-
 test.beforeEach(async ({ page }) => {
   // Get session ID from auth.json
   const sessionId = getSessionIdFromAuth();
 
   // Construct the target URL
-  const targetUrl = `${baseUrl}jobs/filter`;
+  const targetUrl = `./jobs/filter`;
 
   // Navigate to the constructed URL
   await page.goto(targetUrl);

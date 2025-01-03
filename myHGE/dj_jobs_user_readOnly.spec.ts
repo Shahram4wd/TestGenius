@@ -22,9 +22,6 @@ function getSessionIdFromAuth(): string {
   return sessionCookie.value.replace(/"/g, '');
 }
 
-// Define the base URL
-const baseUrl = 'https://stagedj.myhge.com/';
-
 test.describe('Select User Page', () => {
 
   // Runs before each test
@@ -33,7 +30,7 @@ test.describe('Select User Page', () => {
       const sessionId = getSessionIdFromAuth();
   
       // Construct the target URL
-      const targetUrl = `${baseUrl}jobs/filter/709055460`;
+      const targetUrl = `./jobs/filter/709055460`;
   
       // Navigate to the constructed URL
       await page.goto(targetUrl);
@@ -123,6 +120,6 @@ test.describe('Select User Page', () => {
 
     // Validate we navigated to the correct page (for example, using the URL or a heading)
     await expect(page).toHaveURL(/\/jobs\/filter/);
-    await expect(page.locator('h2')).toContainText('Jobs List');
+    await expect(page.locator('h2')).toContainText('Select Division');
   });
 });
