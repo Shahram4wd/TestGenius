@@ -5,8 +5,10 @@ import path from 'path';
 // Load .env file from the specified path
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const username = process.env.USERNAME;
+const username = process.env.USERNAME2;
 const password = process.env.PASSWORD;
+console.log("username:"+username);
+console.log(password);
 
 if (!username || !password) {
   throw new Error('Missing USERNAME or PASSWORD environment variables');
@@ -18,7 +20,6 @@ console.log('Username and password loaded from environment variables.');
 
 test('login setup', async ({ page }) => {
   await page.goto('https://staging.myhge.com/');
-  await page.getByPlaceholder('Username').click();
   await page.getByPlaceholder('Username').fill(username);
   await page.getByPlaceholder('Password').fill(password);
   await page.getByRole('button', { name: 'Log In' }).click();

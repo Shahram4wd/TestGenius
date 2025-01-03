@@ -4,4 +4,5 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 # Ignore .env file
+/playwright/.auth/
 .env

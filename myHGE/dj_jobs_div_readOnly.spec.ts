@@ -53,7 +53,7 @@ test.describe('Select Division Page', () => {
 
   test('should display the filter dropdown with all options (All, Active, Inactive)', async ({ page }) => {
     // Locate the dropdown
-    const filterDropdown = page.locator('select'); // use a more specific selector if possible
+    const filterDropdown = page.locator('#is-inactive');
     await expect(filterDropdown).toBeVisible();
 
     // Open the dropdown and verify options
@@ -70,7 +70,7 @@ test.describe('Select Division Page', () => {
   });
 
   test('should filter the divisions when "Active" is selected', async ({ page }) => {
-    const filterDropdown = page.locator('select');
+    const filterDropdown = page.locator('#is-inactive');
     const filterButton = page.locator('button:has-text("Filter")');
 
     // Select 'Active'
@@ -83,7 +83,7 @@ test.describe('Select Division Page', () => {
   });
 
   test('should filter the divisions when "Inactive" is selected', async ({ page }) => {
-    const filterDropdown = page.locator('select');
+    const filterDropdown = page.locator('#is-inactive');
     const filterButton = page.locator('button:has-text("Filter")');
 
     // Select 'Inactive'
@@ -96,7 +96,7 @@ test.describe('Select Division Page', () => {
   });
 
   test('should display all divisions when "All" is selected', async ({ page }) => {
-    const filterDropdown = page.locator('select');
+    const filterDropdown = page.locator('#is-inactive');
     const filterButton = page.locator('button:has-text("Filter")');
 
     // Select 'All'

@@ -25,7 +25,7 @@ function getSessionIdFromAuth(): string {
 // Define the base URL
 const baseUrl = 'https://stagedj.myhge.com/';
 
-test.describe('Select Division Page', () => {
+test.describe('Select User Page', () => {
 
   // Runs before each test
   test.beforeEach(async ({ page }) => {
@@ -53,7 +53,7 @@ test.describe('Select Division Page', () => {
 
   test('should display the filter dropdown with all options (All, Active, Inactive)', async ({ page }) => {
     // Locate the dropdown
-    const filterDropdown = page.locator('select'); // use a more specific selector if possible
+    const filterDropdown = page.locator('#is-inactive');
     await expect(filterDropdown).toBeVisible();
 
     // Open the dropdown and verify options
@@ -70,7 +70,7 @@ test.describe('Select Division Page', () => {
   });
 
   test('should filter the users when "Active" is selected', async ({ page }) => {
-    const filterDropdown = page.locator('select');
+    const filterDropdown = page.locator('#is-inactive');
     const filterButton = page.locator('button:has-text("Filter")');
 
     // Select 'Active'
@@ -83,7 +83,7 @@ test.describe('Select Division Page', () => {
   });
 
   test('should filter the divisions when "Inactive" is selected', async ({ page }) => {
-    const filterDropdown = page.locator('select');
+    const filterDropdown = page.locator('#is-inactive');
     const filterButton = page.locator('button:has-text("Filter")');
 
     // Select 'Inactive'
@@ -96,7 +96,7 @@ test.describe('Select Division Page', () => {
   });
 
   test('should display all divisions when "All" is selected', async ({ page }) => {
-    const filterDropdown = page.locator('select');
+    const filterDropdown = page.locator('#is-inactive');
     const filterButton = page.locator('button:has-text("Filter")');
 
     // Select 'All'
@@ -108,12 +108,21 @@ test.describe('Select Division Page', () => {
     await expect(page.locator('tbody')).toContainText('Scheduler, Account');
   });
 
-  test('should navigate to a specific division page upon clicking a division link', async ({ page }) => {
+  test('should navigate to a specific user page upon clicking a division link', async ({ page }) => {
     // For example, we pick the Scheduler, Account
     await page.getByRole('link', { name: 'Scheduler, Account' }).click();
 
     // Validate we navigated to the correct page (for example, using the URL or a heading)
     await expect(page).toHaveURL(/\/jobs\/list\/\d+$/);
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Account Scheduler');
+  });
+
+  test('should navigate to division page upon clicking the Return to Division List link', async ({ page }) => {
+    // For example, we pick the Scheduler, Account
+    await page.getByRole('link', { name: 'Return to Division List' }).click();
+
+    // Validate we navigated to the correct page (for example, using the URL or a heading)
+    await expect(page).toHaveURL(/\/jobs\/filter/);
+    await expect(page.locator('h2')).toContainText('Jobs List');
   });
 });
