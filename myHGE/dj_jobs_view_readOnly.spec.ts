@@ -30,7 +30,7 @@ test.describe('Select Job Page', () => {
     const sessionId = getSessionIdFromAuth();
 
     // Construct the target URL
-    const targetUrl = `./jobs/filter`;
+    const targetUrl = `./jobs/2028785`;
 
     // Navigate to the constructed URL
     await page.goto(targetUrl);
@@ -42,16 +42,8 @@ test.describe('Select Job Page', () => {
   */
 
   test('Job View - 184216 (Carpentry): Panels', async ({ page }) => {
-    await page.getByRole('link', { name: 'Philadelphia' }).click();
-    await page.locator('#is-inactive').selectOption('');
-    await page.getByRole('button', { name: 'Filter' }).click();
-    await page.getByText('Filter User Status All Active Inactive Filter').click();
-    await page.getByRole('link', { name: 'Russo, Vincenzo' }).click();
-    await page.getByRole('button', { name: 'filter_alt' }).click();
-    await page.getByText('Finished').click();
-    await page.getByRole('button', { name: 'Filter', exact: true }).click();
     //Title
-    await page.getByRole('row', { name: 'Fluck, Bradley 184216 132' }).getByRole('link').click();
+    await expect(page.locator('h2')).toContainText('Bradley FluckCarpentry');
     //Status
     await expect(page.locator('#templateMain')).toContainText('Finished');
     //Contract Panel
@@ -110,7 +102,7 @@ test.describe('Select Job Page', () => {
   });
 
   test('Job View - 184216: Popups Prospect, Prospect Address, Job Costing, Job List', async ({ page }) => {
-    await page.goto("./jobs/2028785");
+    //await page.goto("./jobs/2028785");
     //Popup Prospect
     const page1Promise = page.waitForEvent('popup');
     await page.getByRole('heading', { name: 'Prospect visibility' }).getByRole('link').click();
@@ -132,7 +124,6 @@ test.describe('Select Job Page', () => {
   });
 
   test('Job View - 184216: Edit Panel', async ({ page }) => {
-    await page.goto("./jobs/2028785");
     //Edit Contract
     await expect(page.locator('#templateMain')).toContainText('Contract');
     await page.getByRole('link', { name: 'Contract', exact: true }).click();
@@ -141,14 +132,114 @@ test.describe('Select Job Page', () => {
     await expect(page.locator('#templateMain')).toContainText('Financing');
     await page.locator('#templateMain').getByRole('link', { name: 'Financing' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Edit Financing');
+    //Carpentry
+    await page.getByRole('link', { name: 'Carpentry' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('Edit Carpentry');
+    await page.getByRole('link', { name: 'Return to View Job' }).click();
   });
 
   test('Job View - 184216: Manage Panel', async ({ page }) => {
-    await page.goto("./jobs/2028785");
-    //Production Attachment
+    //await page.goto("./jobs/2028785");
+    //Production Attachments
     await expect(page.locator('#templateMain')).toContainText('Production Attachments');
-    await expect(page.locator('#templateMain')).toContainText('4');
     await page.getByRole('link', { name: 'Production Attachments' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Production Attachments');
+    await page.getByRole('link', { name: 'Return to View Job' }).click();
+    //Sales Attachments
+    await page.goto("./jobs/2028785");
+    await expect(page.locator('#templateMain')).toContainText('Sales Attachments');
+    await page.getByRole('link', { name: 'Sales Attachments' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('Sales Attachments');
+    await page.getByRole('link', { name: 'Return to View Job' }).click();
+    //Change Orders
+    await page.goto("./jobs/2028785");
+    await expect(page.locator('#templateMain')).toContainText('Change Orders');
+    await page.getByRole('link', { name: 'Change Orders' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('Change Orders');
+    await page.getByRole('link', { name: 'Back to Job' }).click();
+    //Photos
+    await page.goto("./jobs/2028785");
+    await expect(page.locator('#templateMain')).toContainText('Photos');
+    await page.getByRole('link', { name: 'Photos' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('Job Photos');
+    await page.getByRole('link', { name: 'Return to View Job' }).click();
+    //Labor Adjustments
+    await page.goto("./jobs/2028785");
+    await expect(page.locator('#templateMain')).toContainText('Labor Adjustments');
+    await page.getByRole('link', { name: 'Labor Adjustments' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('Labor Adjustments');
+    await page.getByRole('link', { name: 'Return to Job Details Page' }).click();
+    //Commissions
+    await page.goto("./jobs/2028785");
+    await expect(page.locator('#templateMain')).toContainText('Commissions');
+    await page.getByRole('link', { name: 'Commissions' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('Job Commissions');
+    await page.getByRole('link', { name: 'Return to Job' }).click();
+    //Warranty Claims
+    await page.goto("./jobs/2028785");
+    await expect(page.locator('#templateMain')).toContainText('Warranty Claims');
+    await page.getByRole('link', { name: 'Warranty Claims' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('Claims');
+    await page.getByRole('link', { name: 'Back to Job' }).click();
+    //Damage Claims
+    await page.goto("./jobs/2028785");
+    await expect(page.locator('#templateMain')).toContainText('Damage Claims');
+    await page.getByRole('link', { name: 'Damage Claims' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('Claims');
+    await page.getByRole('link', { name: 'Back to Job' }).click();
+    //PM Pre-Close Out
+    await page.goto("./jobs/2028785");
+    await expect(page.locator('#templateMain')).toContainText('PM Pre-Close Out');
+    await page.getByRole('link', { name: 'PM Pre-Close Out' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('PM Pre-Close-Out');
+    await page.getByRole('link', { name: 'Return to Job View' }).click();
+    //PM Post Close Out
+    await page.goto("./jobs/2028785");
+    await expect(page.locator('#templateMain')).toContainText('PM Post Close Out');
+    await page.getByRole('link', { name: 'PM Post Close Out' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('PM Post Close Out');
+    await page.getByRole('link', { name: 'Return to View Job' }).click();
+  });
+
+  test('Job View - 184216: View Panel', async ({ page }) => {
+    //await page.goto("./jobs/2028785");
+    //View Panel
+    await expect(page.locator('#templateMain')).toContainText('View');
+    //JSA
+    await expect(page.locator('#templateMain')).toContainText('JSA');
+    const page1Promise = page.waitForEvent('popup');
+    await page.getByRole('link', { name: 'JSA open_in_new' }).click();
+    const page1 = await page1Promise;
+    await expect(page1.locator('h1')).toContainText('Job Site Details');
+    //Invoice
+    await expect(page.locator('#templateMain')).toContainText('Invoice');
+    const page2Promise = page.waitForEvent('popup');
+    await page.getByRole('link', { name: 'Invoice open_in_new' }).click();
+    const page2 = await page2Promise;
+    await expect(page2.locator('h1')).toContainText('Invoice');
+    //Balances
+    await expect(page.locator('#templateMain')).toContainText('Balances');
+    await page.getByRole('link', { name: 'Balances' }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('Balances');
+    await page.getByRole('link', { name: 'Return to View Job' }).click();
+    //Notes
+    await expect(page.locator('#templateMain')).toContainText('Notes');
+    await page.getByRole('link', { name: 'Notes' }).click();
+    await expect(page.locator('h2')).toContainText('Notes');
+    await page.getByRole('link', { name: 'Return to View Job' }).click();
+    //History
+    await expect(page.locator('#templateMain')).toContainText('History');
+    await page.getByRole('link', { name: 'History', exact: true }).click();
+    await expect(page.locator('#templateBreadcrumbs')).toContainText('History');
+    await page.getByRole('link', { name: 'Return to Job' }).click();
+
+
+  });
+
+  test('Job View - 184216: Return to Jobs List', async ({ page }) => {
+    //await page.goto("./jobs/2028785");
+    //View Panel
+    await page.getByRole('link', { name: 'Return to Job List' }).click();
+    await expect(page.locator('h2')).toContainText('Return to Users List');
   });
 });
