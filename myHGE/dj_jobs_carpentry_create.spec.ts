@@ -38,10 +38,6 @@ test.describe('Select Job Page', () => {
     await page.reload();
   });
 
-  /*jobs/filter
-  Test Active, inactive and all divisions filter
-  */
-
   test('Jobs can only be created with unassigned quote', async ({ page }) => {
     page.once('dialog', dialog => {
       console.log(`Dialog message: ${dialog.message()}`);
@@ -50,7 +46,7 @@ test.describe('Select Job Page', () => {
     await page.getByRole('heading', { name: 'Jobs 1 add_box' }).getByRole('link').click();
   });
 
-  test('Create Carpentry Quote and then Job for Pam and Paul Schultz prospect (ID = 1)', async ({ page }) => {
+  test.afterAll('Create Carpentry Quote for Pam and Paul Schultz prospect (ID = 1)', async ({ page }) => {
     await page.getByRole('heading', { name: 'Quotes' }).getByRole('link').click();
     await page.getByLabel('Quote Name:').click();
     await page.getByLabel('Quote Name:').fill('Carpentry');
@@ -59,11 +55,34 @@ test.describe('Select Job Page', () => {
     await page.getByLabel('Service:').selectOption('6');
     await page.getByPlaceholder('0.00').click();
     await page.getByPlaceholder('0.00').fill('1000');
-    await page.locator('#id_contract_1').click();
-    await page.locator('#id_contract_1').setInputFiles('myHGE/files/contract.png');
+    if (await page.getByRole('link', { name: 'Upload a new file' }) == null){
+      await page.locator('#id_contract_1').click();
+      await page.locator('#id_contract_1').setInputFiles('myHGE/files/contract.png');
+    } else {
+      await page.locator('input[type="radio"][name="contract_0"]').click();
+    }
     await page.locator('#id_estimate_tool_1').click();
     await page.locator('#id_estimate_tool_1').setInputFiles('myHGE/files/estimate_tool.png');
     await page.getByLabel('Status:').selectOption('2');
     await page.getByRole('button', { name: 'Save' }).click();
+    await page.waitForNavigation();
+    const currentUrl = page.url();
+    expect(currentUrl).not.toContain("secure");
+  });
+
+  test('Create Carpentry Job for Pam and Paul Schultz prospect (ID = 1)', async ({ page }) => {
+    await page.getByRole('link', { name: 'Add Job' }).click();
+    await page.getByLabel('Carpentry $1,000.00 Carpentry').check();
+    await page.locator('#contract-file').click();
+    await page.locator('#contract-file').setInputFiles('contract.png');
+    await page.locator('#price-level').selectOption('1_year');
+    await page.locator('#field-user-id div').click();
+    await page.locator('select[name="sold_user_id"]').selectOption('750843761');
+    await page.getByLabel('Yes').check();
+    await page.locator('#field-is-lead-pb').getByText('No', { exact: true }).click();
+    await page.getByRole('button', { name: 'Next' }).click();
+    await page.locator('#additional-details').click();
+    await page.locator('#additional-details').fill('Carpentry Additional Details');
+    await page.getByRole('button', { name: 'Add' }).click();
   });
 });

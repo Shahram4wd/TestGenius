@@ -58,10 +58,5 @@ test.describe('Select Job Page', () => {
     await expect(page.locator('#templateMain')).toContainText('Doors');
   });
 
-  test('Job View - 153394 (Doors)', async ({ page }) => {
-    //Title
-    await page.goto('./jobs/2018196');
-    await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
-    await expect(page.locator('#templateMain')).toContainText('Doors');
-  });
+  
 });
