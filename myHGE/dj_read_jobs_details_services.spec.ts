@@ -38,76 +38,65 @@ test.describe('Select Job Page', () => {
   });
 
   test('Job View - 109627 (Carpentry)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2003262');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
     await expect(page.getByRole('link', { name: 'Carpentry' })).toBeVisible();
   });
 
   test('Job View - 153394 (Doors)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2018196');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
     await expect(page.getByRole('link', { name: 'Doors' })).toBeVisible();
   });
 
   test('Job View - 173950 (Insulation)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2025160');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
     await expect(page.getByRole('link', { name: 'Insulation' })).toBeVisible();
   });
 
   test('Job View - 102934 (Gutter)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2001015');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
     await expect(page.getByRole('link', { name: 'Gutters' })).toBeVisible();
   });
 
   test('Job View - 153733 (Gutter Protection)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2018309');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
     await expect(page.getByRole('link', { name: 'Gutter Protection' })).toBeVisible();
   });
   
   test('Job View - 153274 (others)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2018155');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
   });
 
   test('Job View - 108061 (Roofing)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2002738');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
     await expect(page.getByRole('link', { name: 'Roofing' })).toBeVisible();
   });
 
   test('Job View - 108781 (Siding)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2002978');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
     await expect(page.getByRole('link', { name: 'Siding' })).toBeVisible();
   });
   
   test('Job View - 100207 (Windows)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2000170');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
     await expect(page.getByRole('link', { name: 'Windows' })).toBeVisible();
   });
 
   test('Job View - 100711 (Exterior Painting)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2000002');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job');
     await expect(page.getByRole('link', { name: 'Exterior Painting' })).toBeVisible();
   });
 
   test('Job View - 100717 (Interior Painting)', async ({ page }) => {
-    //Title
     await page.goto('./jobs/2000000');
     await expect(page.locator('#templateBreadcrumbs')).toContainText('View Job')
     await expect(page.getByRole('link', { name: 'Interior Painting' })).toBeVisible();
