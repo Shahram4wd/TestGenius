@@ -22,7 +22,7 @@ function getSessionIdFromAuth(): string {
   return sessionCookie.value.replace(/"/g, '');
 }
 
-test.describe('Select Job Page', () => {
+test.describe('Job Details Page', () => {
 
   // Runs before each test
   test.beforeEach(async ({ page }) => {
@@ -47,7 +47,7 @@ test.describe('Select Job Page', () => {
     //Status
     await expect(page.locator('#templateMain')).toContainText('Finished');
     //Contract Panel
-    await expect(page.getByRole('heading', { name: 'Contract visibility' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Contract' })).toBeVisible();
     await expect(page.locator('#templateMain')).toContainText('184216');
     await expect(page.locator('#templateMain')).toContainText('Nov 12, 2024');
     await expect(page.locator('#templateMain')).toContainText('0');
@@ -61,7 +61,7 @@ test.describe('Select Job Page', () => {
     //Quote Panel
     await expect(page.getByRole('heading', { name: 'Quotes' })).toBeVisible();
     await expect(page.locator('#templateMain')).toContainText('Trim $7,775.00 Carpentry All white trim on eves and rakes and 9 window caps only no soffits');
-    //Production
+    //Production Panel
     await expect(page.locator('#templateMain').getByRole('heading', { name: 'Production' })).toBeVisible();
     await expect(page.locator('#templateMain')).toContainText('Taimoorshah Ayazi');
     await expect(page.locator('#templateMain')).toContainText('Nov, 2024');
@@ -73,12 +73,12 @@ test.describe('Select Job Page', () => {
     await expect(page.getByRole('heading', { name: 'Amounts' })).toBeVisible();
     await expect(page.locator('#templateMain')).toContainText('$7,775.00');
     await expect(page.locator('#templateMain')).toContainText('$0.00');
-    //Amounts Panel
-    await expect(page.locator('#link-sales-tax-exempt')).toContainText('money_off');
-    await expect(page.getByRole('heading', { name: 'Payments visibility' })).toBeVisible();
-    await expect(page.locator('#templateMain')).toContainText('$0.00');
     //Payments Panel
-    await expect(page.getByRole('heading', { name: 'Job Costing visibility' })).toBeVisible();
+    await expect(page.locator('#link-sales-tax-exempt')).toContainText('money_off');
+    await expect(page.getByRole('heading', { name: 'Payments' })).toBeVisible();
+    await expect(page.locator('#templateMain')).toContainText('$0.00');
+    //Job Costing Panel
+    await expect(page.getByRole('heading', { name: 'Job Costing' })).toBeVisible();
     await expect(page.locator('#templateMain')).toContainText('$2,893.43');
     await expect(page.locator('#templateMain')).toContainText('37.2%');
     await expect(page.locator('#templateMain')).toContainText('$2,573.59');
@@ -105,7 +105,7 @@ test.describe('Select Job Page', () => {
     //await page.goto("./jobs/2028785");
     //Popup Prospect
     const page1Promise = page.waitForEvent('popup');
-    await page.getByRole('heading', { name: 'Prospect visibility' }).getByRole('link').click();
+    await page.getByRole('heading', { name: 'Prospect' }).getByRole('link').click();
     const page1 = await page1Promise;
     await expect(page1.getByRole('heading', { name: 'Bradley Fluck arrow_back' })).toBeVisible();
     //Popup Prospect Address
@@ -115,7 +115,7 @@ test.describe('Select Job Page', () => {
     await expect(page2.getByRole('heading', { name: 'Lexington Ave' })).toBeVisible();
     //Popup Job Costing
     const page3Promise = page.waitForEvent('popup');
-    await page.getByRole('heading', { name: 'Job Costing visibility' }).getByRole('link').click();
+    await page.getByRole('heading', { name: 'Job Costing' }).getByRole('link').click();
     const page3 = await page3Promise;
     await expect(page3.getByText('place Reports \\ Job Costing')).toBeVisible();
     //Return to Job List
@@ -128,14 +128,19 @@ test.describe('Select Job Page', () => {
     await expect(page.locator('#templateMain')).toContainText('Contract');
     await page.getByRole('link', { name: 'Contract', exact: true }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Edit Contract');
+    await page.getByRole('link', { name: 'Return to View Job' }).click();
+    expect(page.url()).not.toContain("secure");
     //Financing
     await expect(page.locator('#templateMain')).toContainText('Financing');
     await page.locator('#templateMain').getByRole('link', { name: 'Financing' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Edit Financing');
+    await page.getByRole('link', { name: 'Return to View Job' }).click();
+    expect(page.url()).not.toContain("secure");
     //Carpentry
     await page.getByRole('link', { name: 'Carpentry' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Edit Carpentry');
     await page.getByRole('link', { name: 'Return to View Job' }).click();
+    expect(page.url()).not.toContain("secure");
   });
 
   test('Job View - 184216: Manage Panel', async ({ page }) => {
@@ -145,60 +150,70 @@ test.describe('Select Job Page', () => {
     await page.getByRole('link', { name: 'Production Attachments' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Production Attachments');
     await page.getByRole('link', { name: 'Return to View Job' }).click();
+    expect(page.url()).not.toContain("secure");
     //Sales Attachments
     await page.goto("./jobs/2028785");
     await expect(page.locator('#templateMain')).toContainText('Sales Attachments');
     await page.getByRole('link', { name: 'Sales Attachments' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Sales Attachments');
     await page.getByRole('link', { name: 'Return to View Job' }).click();
+    expect(page.url()).not.toContain("secure");
     //Change Orders
     await page.goto("./jobs/2028785");
     await expect(page.locator('#templateMain')).toContainText('Change Orders');
     await page.getByRole('link', { name: 'Change Orders' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Change Orders');
     await page.getByRole('link', { name: 'Back to Job' }).click();
+    expect(page.url()).not.toContain("secure");
     //Photos
     await page.goto("./jobs/2028785");
     await expect(page.locator('#templateMain')).toContainText('Photos');
     await page.getByRole('link', { name: 'Photos' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Job Photos');
     await page.getByRole('link', { name: 'Return to View Job' }).click();
+    expect(page.url()).not.toContain("secure");
     //Labor Adjustments
     await page.goto("./jobs/2028785");
     await expect(page.locator('#templateMain')).toContainText('Labor Adjustments');
     await page.getByRole('link', { name: 'Labor Adjustments' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Labor Adjustments');
     await page.getByRole('link', { name: 'Return to Job Details Page' }).click();
+    expect(page.url()).not.toContain("secure");
     //Commissions
     await page.goto("./jobs/2028785");
     await expect(page.locator('#templateMain')).toContainText('Commissions');
     await page.getByRole('link', { name: 'Commissions' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Job Commissions');
     await page.getByRole('link', { name: 'Return to Job' }).click();
+    expect(page.url()).not.toContain("secure");
     //Warranty Claims
     await page.goto("./jobs/2028785");
     await expect(page.locator('#templateMain')).toContainText('Warranty Claims');
     await page.getByRole('link', { name: 'Warranty Claims' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Claims');
     await page.getByRole('link', { name: 'Back to Job' }).click();
+    expect(page.url()).not.toContain("secure");
     //Damage Claims
     await page.goto("./jobs/2028785");
     await expect(page.locator('#templateMain')).toContainText('Damage Claims');
     await page.getByRole('link', { name: 'Damage Claims' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('Claims');
     await page.getByRole('link', { name: 'Back to Job' }).click();
+    expect(page.url()).not.toContain("secure");
     //PM Pre-Close Out
     await page.goto("./jobs/2028785");
     await expect(page.locator('#templateMain')).toContainText('PM Pre-Close Out');
     await page.getByRole('link', { name: 'PM Pre-Close Out' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('PM Pre-Close-Out');
     await page.getByRole('link', { name: 'Return to Job View' }).click();
+    expect(page.url()).not.toContain("secure");
     //PM Post Close Out
     await page.goto("./jobs/2028785");
     await expect(page.locator('#templateMain')).toContainText('PM Post Close Out');
     await page.getByRole('link', { name: 'PM Post Close Out' }).click();
     await expect(page.locator('#templateBreadcrumbs')).toContainText('PM Post Close Out');
     await page.getByRole('link', { name: 'Return to View Job' }).click();
+    expect(page.url()).not.toContain("secure");
   });
 
   test('Job View - 184216: View Panel', async ({ page }) => {

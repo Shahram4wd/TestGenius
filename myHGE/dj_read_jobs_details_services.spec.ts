@@ -22,7 +22,7 @@ function getSessionIdFromAuth(): string {
   return sessionCookie.value.replace(/"/g, '');
 }
 
-test.describe('Select Job Page', () => {
+test.describe('Check Job Details Page for Different Services', () => {
 
   // Runs before each test
   test.beforeEach(async ({ page }) => {

@@ -167,7 +167,7 @@ test.describe('Select Job Page', () => {
     await page.getByRole('button', { name: 'Filter', exact: true }).click();
     await expect(page.locator('table tbody tr').first()).toContainText('Dick, Tim');
     
-    //Sold Date: After
+    //Sold Date: Before
     await page.getByRole('button', { name: 'filter_alt' }).click();
     await page.getByLabel('Sold Date:').selectOption('b');
     await page.locator('#id_before_date').fill('2024-11-01');

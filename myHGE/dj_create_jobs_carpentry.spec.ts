@@ -23,7 +23,7 @@ function getSessionIdFromAuth(): string {
   return sessionCookie.value.replace(/"/g, '');
 }
 
-test.describe('Select Job Page', () => {
+test.describe('Create Carpentry Job', () => {
 
   // Runs before each test
   test.beforeEach(async ({ page }) => {
@@ -70,7 +70,7 @@ test.describe('Select Job Page', () => {
     expect(currentUrl).not.toContain("secure");
   });
 
-  test('Create Carpentry Job for Pam and Paul Schultz prospect (ID = 1)', async ({ page }) => {
+  test('Create Carpentry Job in Zope for Pam and Paul Schultz prospect (ID = 1)', async ({ page }) => {
     await page.getByRole('link', { name: 'Add Job' }).click();
     await page.getByLabel('Carpentry $1,000.00 Carpentry').check();
     await page.locator('#contract-file').click();
